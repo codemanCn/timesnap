@@ -5,6 +5,7 @@ import sys
 import tempfile
 import time
 import unittest
+import venv
 from pathlib import Path
 
 
@@ -73,6 +74,33 @@ class TimeSnapCliTests(unittest.TestCase):
             restored_stats = note.stat()
             self.assertEqual(oct(restored_stats.st_mode & 0o777), "0o640")
             self.assertAlmostEqual(restored_stats.st_mtime, original_mtime, delta=2)
+
+    def test_can_install_as_command_line_tool(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            venv_dir = Path(tmpdir) / "venv"
+            venv.EnvBuilder(with_pip=True).create(venv_dir)
+            bin_dir = venv_dir / ("Scripts" if os.name == "nt" else "bin")
+            python_bin = bin_dir / ("python.exe" if os.name == "nt" else "python")
+            tool_bin = bin_dir / ("timesnap.exe" if os.name == "nt" else "timesnap")
+
+            install_result = subprocess.run(
+                [str(python_bin), "-m", "pip", "install", "."],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(install_result.returncode, 0, install_result.stderr)
+            self.assertTrue(tool_bin.exists(), install_result.stdout)
+
+            help_result = subprocess.run(
+                [str(tool_bin), "--help"],
+                text=True,
+                capture_output=True,
+            )
+
+            self.assertEqual(help_result.returncode, 0, help_result.stderr)
+            self.assertIn("snapshot", help_result.stdout)
 
 
 if __name__ == "__main__":

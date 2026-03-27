@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "timesnap"
+version = "0.1.0"
+description = "A CLI tool for snapshotting and restoring file metadata."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "codemanCn" }
+]
+keywords = ["cli", "snapshot", "metadata", "filesystem"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "License :: OSI Approved :: MIT License",
+  "Environment :: Console",
+]
+
+[project.scripts]
+timesnap = "timesnap.cli:main"
+
+[tool.setuptools]
+packages = ["timesnap"]

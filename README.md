@@ -4,7 +4,29 @@
 
 ## 安装
 
-### 方式一：通过 Git 克隆后直接运行
+### 方式一：安装为系统命令行工具
+
+```bash
+git clone https://github.com/codemanCn/timesnap.git
+cd timesnap
+pip install .
+timesnap --help
+```
+
+如果不想装到系统环境，可以安装到用户目录：
+
+```bash
+pip install --user .
+```
+
+### 方式二：直接从 Git 安装
+
+```bash
+pip install git+https://github.com/codemanCn/timesnap.git
+timesnap --help
+```
+
+### 方式三：通过 Git 克隆后直接运行
 
 ```bash
 git clone https://github.com/codemanCn/timesnap.git
@@ -12,7 +34,7 @@ cd timesnap
 python -m timesnap --help
 ```
 
-### 方式二：仅拉代码到本地某个目录
+### 方式四：仅拉代码到本地某个目录
 
 ```bash
 git clone https://github.com/codemanCn/timesnap.git /your/path/timesnap
@@ -27,6 +49,12 @@ python --version
 ```
 
 推荐 Python 3.10 及以上。
+
+## 卸载
+
+```bash
+pip uninstall timesnap
+```
 
 ## 命令
 
