@@ -62,7 +62,9 @@ def snapshot_target(target: Path, name: str | None = None) -> str:
     for file_path in iter_files(target):
         relative_path = file_path.relative_to(target)
         stats = file_path.stat()
-        birthtime = getattr(stats, "st_birthtime", None)
+        birthtime = getattr(stats, "st_birthtime", None) or None
+        if not birthtime:
+            birthtime = stats.st_ctime or None
         entries.append(
             FileEntry(
                 relative_path=str(relative_path),
